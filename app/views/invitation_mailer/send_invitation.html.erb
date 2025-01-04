@@ -1,0 +1,7 @@
+<p>Hello, <%= @user.email %></p>
+<p>Invitation for join organization.</p>
+<p>
+  <%= link_to accepts_invitation_url(invitation_token: @invitation_token) do %>
+    Accept invitation
+  <% end %>
+</p>

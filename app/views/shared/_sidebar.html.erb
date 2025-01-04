@@ -1,6 +1,18 @@
-   
 <div class="min-w-16 w-16 flex flex-col items-center bg-green-200 py-4">
   <%= link_to dashboard_path, class: "w-12 h-12 flex items-center justify-center bg-green-500 text-white rounded-full"  do %>
-    <span class="uppercase"><%= Current.user.email.slice(0,2) %></span>
+    <span class="uppercase"><%= current_user.email.slice(0,2) %></span>
   <% end %>
+  <div class="flex flex-1 overflow-y-auto py-4 flex-col space-y-2 p-2">
+    <% current_user.organizations.each do |org| %>
+      <%= active_link_to organization_path(org), class_active: "border-2 border-red-500 rounded", class: "rounded" do %>
+        <% if org.logo_attached? %>
+          <%= image_tag org.get_logo, class: "w-15 h-15 rounded object-cover" %>
+        <% else %>
+          <div class="p-4 rounded w-15 h-15 bg-green-300 text-white uppercase flex items-center justify-center font-bold text-md">
+            <span><%= org.name.slice(0, 2) %></span>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

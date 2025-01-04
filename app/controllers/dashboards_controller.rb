@@ -4,7 +4,7 @@ class DashboardsController < ApplicationController
   # layout "auth_layout"
 
   def show
-    @organizations = Organization.all.order(created_at: :desc)
+    @organizations = current_user.organizations.order(created_at: :desc)
   end
 
   private

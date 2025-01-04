@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  announceable: one
+  announceable_type: Announceable
+  announcement: one
+
+two:
+  announceable: two
+  announceable_type: Announceable
+  announcement: two

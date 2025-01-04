@@ -1,0 +1,13 @@
+<h1>Reset your password</h1>
+<%= form_with scope: :password_reset, url: invitation_path, method: :patch, class: "p-4 shadow border rounded-md mt-8 flex flex-col space-y-4" do |form| %>
+  <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+  <div class="w-full">
+    <%= form.label :password, class: "block font-medium text-gray-700" %>
+    <%= form.text_field :password, class: "p-2 border rounded-md text-black" %>
+  </div>
+  <div class="w-full">
+    <%= form.label :password_confirmation, class: "block font-medium text-gray-700" %>
+    <%= form.text_field :password_confirmation, class: "p-2 border rounded-md text-black" %>
+  </div>
+  <%= form.submit "Reset Password", class: "w-40 rounded-md bg-blue-500 text-white text-medium p-2" %>
+<% end %>

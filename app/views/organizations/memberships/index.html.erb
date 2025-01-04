@@ -1,0 +1,21 @@
+<div class="w-full h-full overflow-y-auto p-4">
+  <div class="flex items-center justify-between w-full">
+    <h2 class="text-lg text-green-500 font-medium">Members</h2>
+    <% if @organization.is_administrator? %>
+      <%= link_to 'Add user', new_organization_membership_path, class: 'btn-primary' %>
+    <% end %>
+  </div>
+  <div class="flex flex-col space-y-2">
+    <% @memberships.each do |user| %>
+      <div class="grid grid-cols-3 gap-5">
+        <% if user&.profile.present? %>
+          <p><%= user&.profile.present? ? user&.profile.full_name : user.email %></p>
+        <% else %>
+          <p></p>
+        <% end %>
+        <p><%= user.email %></p>
+        <p><%= @organization.get_role(user: user) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -22,8 +22,10 @@
       <%= form.text_field :pin_code, class: "p-2 border rounded-md text-black" %>
     </div>
     <div class="w-full">
-      <%= form.label :timezone, class: "block font-medium text-gray-700" %>
-      <%= form.text_field :timezone, class: "p-2 border rounded-md text-black" %>
+      <%= label_tag :timezone, "Select Your Timezone:", class: "block text-base font-medium text-gray-900 dark:text-gray-300 mb-1" %>
+      <%= select_tag :timezone, options_for_select(ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }),
+          class: "p-2 border rounded-md text-black"
+          %>
     </div>
     <div class="w-full">
       <div class="mb-2">

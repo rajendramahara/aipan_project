@@ -1,10 +1,10 @@
-<div class="p-4 flex flex-col space-y-4">
+<div class="p-4 flex flex-col space-y-4 w-full">
   <div class="flex items-center justify-between px-4 rounded-md border border-green-200 py-2">
     <h1 class="text-xl text-green-500 font-medium">Organizations</h1>
     <%= link_to "Create New", new_organization_path, data: { turbo_frame: "new_organization" }, class: "btn-primary" %>
   </div>
   <%= turbo_frame_tag Organization.new %>
-  <div class="" id=""></div>
+  <%= turbo_stream_from "organizations_#{Current.user.id}"%>
   <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="organizations">
     <% @organizations.each do |organization| %>
       <%= render partial: "organizations/organization", locals: { organization: organization } %>

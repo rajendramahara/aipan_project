@@ -1,5 +1,8 @@
 class OrganizationsController < ApplicationController
-  before_action :set_org, only: %i[edit update destroy]
+  before_action :set_org, only: %i[show edit update destroy]
+
+  def show
+  end
 
   def new
     @organization = Organization.new
@@ -7,7 +10,7 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new(org_params)
-
+    @membership = @organization.memberships.build(user: current_user, role: Membership.roles[:admin])
     respond_to do |format|
       if @organization.save
         format.html { redirect_to dashboard_path }
@@ -51,6 +54,7 @@ class OrganizationsController < ApplicationController
 
   def set_org
     @organization = Organization.find(params[:id])
+    @current_membership = current_user.memberships.find_by(organization: @organization)
   end
 
   def org_params

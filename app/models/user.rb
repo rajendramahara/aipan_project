@@ -4,6 +4,15 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_one :profile, dependent: :destroy
 
+  has_many :memberships, dependent: :destroy
+  has_many :organizations, through: :memberships
+
+  has_many :department_employees, dependent: :destroy
+  has_many :departments, through: :department_employees
+
+  has_many :announcements, dependent: :destroy
+  has_many :announcement_recipients, as: :announceable, dependent: :destroy
+
   validates :password, length: { minimum: MINIMUM_PASSWORD_LENGTH }, if: :password_digest_changed?
   validates :email, presence: true, uniqueness: true
 
@@ -14,6 +23,10 @@ class User < ApplicationRecord
   end
 
   def give_timezone
-    return profile&.timezone&.split("/")[1] if profile&.timezone.present? || "Kolkata"
+    if profile&.timezone.present?
+      return profile&.timezone&.split("/")[1]
+    else
+      return "Kolkata"
+    end
   end
 end

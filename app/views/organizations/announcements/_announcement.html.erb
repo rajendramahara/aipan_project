@@ -1,0 +1,5 @@
+<div class="p-4 border border-green-200 shadow rounded-md flex flex-col <%= announcement.severity == "low" ? "bg-yellow-300 text-yellow-600" : "bg-red-300 text-red-600" %> ">
+  <p><%= announcement.title %></p>
+  <p><%= announcement.content %></p>
+  <p><%= announcement.recipient_type %></p>
+</div>

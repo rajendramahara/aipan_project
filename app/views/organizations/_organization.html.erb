@@ -5,6 +5,7 @@
   <p><%= organization.name %></p>
   <p>created_at: <%= organization.created_at.strftime("%B %d, %Y | %H:%M %p") %></p>
   <div class="w-full flex items-center justify-end gap-2">
+    <%= link_to "show", organization_path(organization), data: { turbo: :false }, class: 'btn-primary' %>
     <%= link_to 'Edit', edit_organization_path(organization), data: { turbo_frame: "new_organization" }, class: 'btn-primary' %>
     <%= button_to 'Delete', organization_path(organization), method: :delete, class: 'rounded-md px-4 py-1 bg-red-500 text-white text-base font-medium' %>
   </div>

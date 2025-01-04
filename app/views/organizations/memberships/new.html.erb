@@ -1,0 +1,18 @@
+<%= form_with url: organization_memberships_path(@organization), class: "p-4 space-y-4" do |form| %>
+  <div class="">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "text-field" %>
+  </div>
+  <div class="">
+    <%= form.label :role %>
+    <div>
+      <% Membership.roles.each do |role, value| %>
+        <div class="flex items-center gap-2">
+          <%= form.radio_button :role, value %>
+          <%= form.label :role, role %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= form.submit class: "btn-primary" %>
+<% end %>

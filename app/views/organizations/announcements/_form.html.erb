@@ -1,0 +1,55 @@
+<%= form_with model: [@organization, announcement], data: { controller: "announcement" }, class: "flex flex-col space-y-2" do |form| %>
+  <div class="">
+    <%= form.label :title, class: "block" %>
+    <%= form.text_field :title, class: "text-field" %>
+  </div>
+  <div class="">
+    <%= form.label :content, class: "block" %>
+    <%= form.text_area :content, class: "text-field" %>
+  </div>
+  <div class="flex items-center space-x-8">
+    <div class="">
+      <%= form.label :severity, class: "block" %>
+      <%= form.select :severity, options_for_select(Announcement.severities.keys.map {|k| [k.capitalize, k]}), {}, class: "text-field w-24" %>
+    </div>
+    <div class="">
+      <%= form.label :recipient_type, class: "block" %>
+      <%= form.select :recipient_type, options_for_select(["Department", "User", "Organization"], selected: announcement.recipient_type ), 
+          {},   
+          { 
+            data: { 
+              action: "change->announcement#toggle", 
+              target: "announcement.recipientType"
+            },
+            class: "text-field w-32"
+          } 
+        %>
+    </div>
+  </div>
+  <div class="flex flex-col hidden" data-announcement-target="toggleable" data-id="department">
+    <%= form.label :department_id, "Select department" %>
+    <% @departments.each do |department| %>
+      <label>
+        <%= check_box_tag "announceable_ids[]", department.id, class: "checkbox" %>
+        <%= form.label "announceable_ids[]", department.name %>
+      </label>
+    <% end %>
+  </div>
+  <div class="flex flex-col hidden" data-announcement-target="toggleable" data-id="user">
+    <%= form.label :department_id, "Select users" %>
+    <% @users.each do |user| %>
+      <label>
+        <%= check_box_tag "announceable_ids[]", user.id, class: "checkbox" %>
+        <%= form.label "announceable_ids[]", user.email %>
+      </label>
+    <% end %>
+  </div>
+  <div class="flex flex-col hidden" data-announcement-target="toggleable" data-id="organization">
+    <%= form.label :organization_id, "Select organization" %>
+    <label>
+      <%= check_box_tag "announceable_ids[]", @organization.id, class: "checkbox" %>
+      <%= form.label "announceable_ids[]", @organization.name %>
+    </label>
+  </div>
+  <%= form.submit "Save", class: "btn-primary self-start" %>
+<% end %>

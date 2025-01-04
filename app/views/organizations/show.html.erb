@@ -1,0 +1,7 @@
+<div class="relative w-full p-4 shadow border border-green-200 rounded-lg flex flex-col space-y-4">
+  <% if @organization.logo.attached? %>
+    <%= image_tag url_for(@organization.logo), class: "w-16 h-16 rounded-lg absolute top-4 right-4"%>
+  <% end %>
+  <p><%= @organization.name %></p>
+  <p>created_at: <%= @organization.created_at.strftime("%B %d, %Y | %H:%M %p") %></p>
+</div>

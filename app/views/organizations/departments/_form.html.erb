@@ -1,0 +1,9 @@
+<%= form_with model: [@organization, department], class: "p-4 shadow border rounded-md mt-8 flex flex-col space-y-4" do |f| %>
+  <div class="">
+    <%= f.label :name, "Department Name" %>
+    <%= f.text_field :name, class: "text-field" %>
+  </div>
+  <div class="flex">
+    <%= f.submit class: "btn-primary" %>
+  </div>
+<% end %>
