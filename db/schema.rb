@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_04_102642) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_30_112019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -99,6 +99,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_04_102642) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "module_id", null: false
+    t.string "module"
+    t.string "action"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -127,6 +135,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_04_102642) do
     t.index ["organization_id"], name: "index_projects_on_organization_id"
   end
 
+  create_table "role_permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "role_id", null: false
+    t.uuid "permission_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_role_permissions_on_permission_id"
+    t.index ["role_id"], name: "index_role_permissions_on_role_id"
+  end
+
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_roles_on_organization_id"
+  end
+
   create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.text "user_agent"
@@ -134,6 +159,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_04_102642) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "user_roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "organization_id", null: false
+    t.uuid "role_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_user_roles_on_organization_id"
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -156,5 +192,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_04_102642) do
   add_foreign_key "memberships", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "projects", "organizations"
+  add_foreign_key "role_permissions", "permissions"
+  add_foreign_key "role_permissions", "roles"
+  add_foreign_key "roles", "organizations"
   add_foreign_key "sessions", "users"
+  add_foreign_key "user_roles", "organizations"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

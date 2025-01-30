@@ -22,6 +22,17 @@ class User < ApplicationRecord
     password_salt.last(10)
   end
 
+  has_many :user_roles
+
+  def user_role
+    user_roles.find_by(organization: Organization.current)&.role
+  end
+
+  def has_permission?(module_id)
+    # user_role&.permissions&.exists?(module_id: module_id)
+    true
+  end
+
   def give_timezone
     if profile&.timezone.present?
       return profile&.timezone&.split("/")[1]

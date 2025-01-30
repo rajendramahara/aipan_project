@@ -26,5 +26,6 @@ Rails.application.routes.draw do
         patch :update_department_user
       end
     end
+    resources :roles, module: :organizations
   end
 end

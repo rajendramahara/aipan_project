@@ -1,0 +1,31 @@
+<%= form_with model: [@organization, @role], local: true, class: "p-10" do |f| %>
+  <div class="mb-4 w-1/2">
+    <%= f.label :name, class:"block mb-2 text-base font-medium text-gray-900 dark:text-white" %>
+    <%= f.text_field :name, placeholder: "Role Name", class: "w-full p-2 rounded-lg text-base text-gray-900 dark:text-white font-inter block flex-1 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 border border-gray-300 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:ring-0 mt-2", autocomplete: "off", required: true, maxLength: 100 %>
+  </div>
+  <h3 class="block text-gray-700 font-bold mb-3">Assign Permissions</h3>
+  <div class="flex flex-col gap-4" data-controller="full-access">
+    <% ids = @role.permissions.ids %>
+    <% grouped_permissions = @permissions.group_by(&:module) %>
+    <% grouped_permissions.each do |module_name, module_permissions| %>
+      <div class="rounded-md shadow-lg border dark:border-gray-700 p-6 flex flex-row justify-evenly items-center">
+        <div class="w-1/5">
+          <h1 class="text-md text-gray-700 font-medium dark:text-gray-200"><%= module_name %></h1>
+        </div>
+        <div class="w-1/5">
+        </div>
+        <div class="grid grid-cols-5 gap-5 items-center w-3/5">
+          <% module_permissions.each do |permission| %>
+            <div class="flex flex-col gap-1 justify-center items-center">
+              <%= check_box_tag 'role[permission_ids][]', permission.id, ids.include?(permission.id), id: "permission_#{permission.id}", class: "module-permission w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600", data: { module: module_name, target: "full-access.permission", action: "change->full-access#updateFullAccess" } %>
+              <%= label_tag "permission_#{permission.id}", "#{permission.action.capitalize}", class: "labeltext" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex items-center justify-between mt-4">
+    <%= f.submit "Create Role", class: 'btn-primary' %>
+  </div>
+<% end %>

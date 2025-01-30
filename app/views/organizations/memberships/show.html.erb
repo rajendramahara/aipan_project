@@ -1,0 +1,15 @@
+<div class="bg-white p-6 w-full">
+  <div class="flex items-center space-x-4">
+    <div class="w-24 h-24 rounded-full border-2 border-gray-300">
+    </div>
+    <div>
+      <h2 class="text-xl font-semibold"><%= @membership.user.email %></h2>
+    </div>
+  </div>
+  <%= link_to "Edit", edit_user_path(@membership.user) %>
+  <div class="mt-4">
+    <p><strong>Email: </strong><%= @membership.user.email %></p>
+    <p><strong>Role: </strong><%= @membership&.user&.user_role&.name %></p>
+    <p><strong>Department: </strong><%= @membership&.user&.department_employees&.first&.department&.name %></p>
+  </div>
+</div>

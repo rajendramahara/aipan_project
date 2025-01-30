@@ -22,12 +22,13 @@
       <%= render 'shared/header' %>
       <main class="flex flex-1 w-full">
         <% if current_organization.present? %>
-          <div class="w-56 h-full flex flex-col bg-green-200">
-            <div class="py-4 w-full flex flex-col gap-2">
+          <div class="w-52 h-full flex flex-col bg-white shadow-lg">
+            <div class="py-4 w-full flex flex-col gap-2 px-4">
               <%= active_link_to "Users", organization_memberships_path(current_organization), class_active: "text-red-600 border border-red-500 rounded", class: "w-full px-2 py-1 text-black" %>
               <%= active_link_to "Projects", organization_projects_path(current_organization), class_active: "text-red-600 border border-red-500 rounded", class: "w-full px-2 py-1 text-black" %>
               <%= active_link_to "Departments", organization_departments_path(current_organization), class_active: "text-red-600 border border-red-500 rounded", class: "w-full px-2 py-1 text-black" %>
               <%= active_link_to "Announcements", organization_announcements_path(current_organization), class_active: "text-red-600 border border-red-500 rounded", class: "w-full px-2 py-1 text-black" %>
+              <%= active_link_to "Roles", organization_roles_path(current_organization), class_active: "text-red-600 border border-red-500 rounded", class: "w-full px-2 py-1 text-black" %>
             </div>
           </div>
         <% end %>

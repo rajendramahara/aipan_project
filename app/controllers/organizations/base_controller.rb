@@ -5,6 +5,7 @@ class Organizations::BaseController < ApplicationController
 
   def set_org
     @organization = Organization.find(params[:organization_id])
+    Organization.current = @organization
     @current_membership = current_user.memberships.find_by(organization: @organization)
   end
 end
