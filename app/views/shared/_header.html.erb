@@ -1,5 +1,6 @@
  <nav class="min-h-12 h-12 border-b w-full">
   <ul class="w-full h-full flex items-center space-x-8 p-4">
+    <%# if policy(Membership).view_profile? %>
     <li><%= link_to "My Profile", user_path(Current.user.id) %></li>
     <li><%= button_to "Sign Out", session_path, method: :delete %></li>
   </ul>

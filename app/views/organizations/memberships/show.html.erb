@@ -1,15 +1,38 @@
-<div class="bg-white p-6 w-full">
-  <div class="flex items-center space-x-4">
-    <div class="w-24 h-24 rounded-full border-2 border-gray-300">
+<% @user = @membership.user %>
+<% @profile = @user.profile %>
+<div class="p-2 flex gap-4">
+  <% if policy(@membership).view_profile? %>
+    <div class="p-4 flex flex-col space-y-4 rounded-md shadow-lg border dark:border-gray-700 w-1/3">
+      <h1 class="text-xl font-bold text-gray-700">User Profile</h1>
+      <% if @profile&.avatar&.attached? %>
+        <%= image_tag url_for(@profile.avatar) , class: "w-20 h-20 rounded-full" %>
+      <% end%>
+      <p class="text-gray-800 font-medium"><strong>Email: </strong><%= @membership.user.email %></p>
+      <p><strong>Role: </strong><%= @membership&.user&.user_role&.name %></p>
+      <p class="text-gray-800 font-medium"><strong>Department: </strong><%= @membership&.user&.department_employees&.first&.department&.name %></p>
+      <% if policy(@membership).edit_profile? %>
+        <%= link_to 'Edit user profile', edit_user_path(@user), class: 'self-start bg-yellow-100 rounded-lg px-2 py-1 text-red-600 hover:underline font-medium text-md border border-red-400' %>
+      <% end %>
     </div>
-    <div>
-      <h2 class="text-xl font-semibold"><%= @membership.user.email %></h2>
+  <% end %>
+  <% if policy(@membership).view_salary? %>
+    <div class="p-4 flex flex-col space-y-4 rounded-md shadow-lg border dark:border-gray-700 w-1/3">
+      <h1 class="text-xl font-bold">Salary Details</h1>
+      <p>Annaul Salary: <span class="font-bold"> 360000.00</span></p>
+      <p>Monthly Salary: <span class="font-bold"> 300000.00</span></p>
+      <% if policy(@membership).edit_salary? %>
+        <%= link_to 'Edit Salary details', edit_user_path(@user), class: 'self-start bg-yellow-100 rounded-lg px-2 py-1 text-red-600 hover:underline font-medium text-md border border-red-400' %>
+      <% end %>
     </div>
-  </div>
-  <%= link_to "Edit", edit_user_path(@membership.user) %>
-  <div class="mt-4">
-    <p><strong>Email: </strong><%= @membership.user.email %></p>
-    <p><strong>Role: </strong><%= @membership&.user&.user_role&.name %></p>
-    <p><strong>Department: </strong><%= @membership&.user&.department_employees&.first&.department&.name %></p>
-  </div>
+  <% end %>
+  <% if policy(@membership).view_payment? %>
+    <div class="p-4 flex flex-col space-y-4 rounded-md shadow-lg border dark:border-gray-700 w-1/3">
+      <h1 class="text-xl font-bold">Payment Details</h1>
+      <p>PAN NO: <span class="font-bold"> AAAAAA00000D</span></p>
+      <p>account no: <span class="font-bold">4667435345345</span></p>
+      <% if policy(@membership).edit_payment? %>
+        <%= link_to 'Edit Payment details', edit_user_path(@user), class: 'self-start bg-yellow-100 rounded-lg px-2 py-1 text-red-600 hover:underline font-medium text-md border border-red-400' %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
