@@ -11,8 +11,11 @@ class OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(org_params)
     @membership = @organization.memberships.build(user: current_user, role: Membership.roles[:admin])
+
     respond_to do |format|
       if @organization.save
+        @role = @organization.roles.create!(name: "admin")
+        @user_role = @organization.user_roles.create!(role: @role, user: current_user)
         format.html { redirect_to dashboard_path }
         format.turbo_stream {
           flash.now[notice] = "Organization created successfully!"

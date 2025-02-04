@@ -13,7 +13,7 @@ class Organization < ApplicationRecord
 
   validates :name, presence: true
 
-  broadcasts_to ->(organization) { "organizations_#{Current.user.id}" }
+  # broadcasts_to ->(organization) { "organizations_#{Current.user.id}" }
 
   def self.current
     Thread.current[:current_organization]

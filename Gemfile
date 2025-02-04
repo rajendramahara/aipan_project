@@ -62,3 +62,4 @@ gem "tailwindcss-rails", "~> 3.3"
 gem "bcrypt", "~> 3.1"
 
 gem "active_link_to", "~> 1.0"
+gem 'pundit'
